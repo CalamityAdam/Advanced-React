@@ -140,6 +140,7 @@ class CreateItem extends Component {
                   onChange={this.handleChange}
                 />
               </label>
+
               <button type="submit">Submit</button>
             </fieldset>
           </Form>
