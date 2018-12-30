@@ -43,8 +43,13 @@ class CreateItem extends Component {
   };
 
   uploadFile = async e => {
-    console.log('uploading file...');
     const files = e.target.files;
+    if (!files[0]) {
+      return this.setState({
+        image: '',
+        largeImage: '',
+      });
+    }
     const data = new FormData();
     data.append('file', files[0]);
     data.append('upload_preset', 'sickfits');
@@ -56,7 +61,6 @@ class CreateItem extends Component {
       },
     );
     const file = await res.json();
-    console.log(file);
     this.setState({
       image: file.secure_url,
       largeImage: file.eager[0].secure_url,
