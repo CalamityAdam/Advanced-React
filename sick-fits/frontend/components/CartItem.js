@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import Router from 'next/router';
 import formatMoney from '../lib/formatMoney';
 import RemoveFromCart from './RemoveFromCart';
 
@@ -19,6 +20,15 @@ const CartItemStyles = styled.li`
   }
 `;
 
+const routeToItem = item => {
+  Router.push({
+    pathname: '/item',
+    query: {
+      id: item.id,
+    },
+  });
+};
+
 const CartItem = ({ cartItem }) => {
   // first check if that item exists (protect against item deletion errors)
   if (!cartItem.item)
@@ -32,7 +42,9 @@ const CartItem = ({ cartItem }) => {
     <CartItemStyles>
       <img width="100" src={cartItem.item.image} alt={cartItem.item.title} />
       <div className="cart-item-details">
-        <h3>{cartItem.item.title}</h3>
+        <h3 onClick={() => routeToItem(cartItem.item)}>
+          {cartItem.item.title}
+        </h3>
         <p>
           {formatMoney(cartItem.item.price * cartItem.quantity)}
           {' - '}
