@@ -7,7 +7,7 @@
     "dev": "next -p 7777",
     "build": "next build",
     "start": "next start",
-    "test": "NODE_ENV=test jest --maxWorkers=1 --watch",
+    "test": "NODE_ENV=test jest --watch",
     "test-win": "SET NODE_ENV=test&& jest --watch",
     "heroku-postbuild": "next build"
   },
@@ -48,7 +48,7 @@
     "jest-transform-graphql": "^2.1.0"
   },
   "jest": {
-
+    "verbose": true,
     "setupTestFrameworkScriptFile": "<rootDir>/jest.setup.js",
     "testPathIgnorePatterns": [
       "<rootDir>/.next/",
