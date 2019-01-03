@@ -3,9 +3,7 @@ import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Router from 'next/router';
 import Form from './styles/Form';
-import formatMoney from '../lib/formatMoney';
 import Error from './ErrorMessage';
-import fetch from 'node-fetch';
 
 const CREATE_ITEM_MUTATION = gql`
   mutation CREATE_ITEM_MUTATION(
@@ -53,6 +51,7 @@ class CreateItem extends Component {
     const data = new FormData();
     data.append('file', files[0]);
     data.append('upload_preset', 'sickfits');
+
     const res = await fetch(
       'https://api.cloudinary.com/v1_1/calamityadam/image/upload',
       {
@@ -72,13 +71,13 @@ class CreateItem extends Component {
       <Mutation mutation={CREATE_ITEM_MUTATION} variables={this.state}>
         {(createItem, { loading, error }) => (
           <Form
+            data-test="form"
             onSubmit={async e => {
               // Stop the form from submitting
               e.preventDefault();
               // call the mutation
               const res = await createItem();
               // change them to the single item page
-              console.log(res);
               Router.push({
                 pathname: '/item',
                 query: { id: res.data.createItem.id },
@@ -134,8 +133,7 @@ class CreateItem extends Component {
 
               <label htmlFor="description">
                 Description
-                <input
-                  type="text"
+                <textarea
                   id="description"
                   name="description"
                   placeholder="Enter A Description"
